@@ -1,9 +1,82 @@
-<script setup lang="ts">
-import TheWelcome from '../components/TheWelcome.vue'
-</script>
-
 <template>
   <main>
-    <TheWelcome />
+    <header>
+      <h1>Importers of Fine Wines</h1>
+    </header>
+<img id="index-img" src="" alt="grapevines">
+<p class="intro-text">Since 1792 NFI Wine Merchants have been dedicated to sourcing and importing the best European wines. We have long standing
+partnerships with an exclusive network of vineyards across the continent, and pride ourselves on the consistent
+quality of our wines and our high standards of customer service.</p>
+<form action="" method="post">
+  <h3>Find your perfect wine</h3>
+    <select class="search-select" name="country" id="country">
+      <option value="%">Country (any)</option>
+      <option v-for="country in countries" :value="country" :key="country">{{ country}}</option>
+    </select>
+
+
+    <select class="search-select" name="color" id="color">
+      <option value="%">Colour (any)</option>
+      <option v-for="color in colors" :value="color" :key="color">{{ color }}</option>
+    </select>
+
+
+    <select class="search-select" name="price" id="price">
+      <option value="0 1000">Price (any)</option>
+      <option value="0 10">Up to £10</option>
+      <option value="10 20">£10 to £19.99</option>
+      <option value="20 35">£20 to £34.99</option>
+      <option value="35 50">£35 to £50</option>
+      <option value="50 1000">Over £50</option>
+    </select>
+
+  <div class="form-group">
+    <div class="form-check">
+      <input class="form-check-input" id="desc" type="radio" name="sort" value="desc" checked>
+      <label class="form-check-label" for="desc">Sort Price High-Low</label>
+  </div>
+    <div class="form-check">
+      <input class="form-check-input" id="asc" type="radio" name="sort" value="asc">
+    <label class="form-check-label" for="asc">Sort Price Low-High</label>
+  </div>
+  </div>
+  <input type="submit" value="Search wines">
+</form>
+
+<h3>Disclaimer</h3>
+<p>This isn't a real wine shop. I don't have this wine and you can't buy it off me. I've built this shop to practise using
+  Flask. If you want to buy any of these wines go to <a style="text-decoration:underline" href="https://www.tanners-wines.co.uk/">Tanners Wine Merchants</a>
+  who are an excellent actual wine merchants and from whose website I borrowed the details of the individual wines.</p>
+
+
   </main>
 </template>
+
+<script lang="ts">
+import axios from 'axios';
+
+export default {
+  name: 'home',
+  data() {
+    return {
+      countries: [],
+      colors: []
+    };
+  },
+  mounted() {
+    this.getParams();
+  },
+  methods: {
+    async getParams() {
+      await axios
+        .get('/api/getParams')
+        .then(response => {
+          this.countries = response.data.countries;
+          this.colors = response.data.colors;
+          console.log(response.data)
+        })
+        .catch(error => console.log(error))
+    }
+  }
+}
+</script>
