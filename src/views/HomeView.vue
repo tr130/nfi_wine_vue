@@ -52,11 +52,11 @@ quality of our wines and our high standards of customer service.</p>
   </main>
 </template>
 
-<script lang="ts">
+<script>
 import axios from 'axios';
 
 export default {
-  name: 'home',
+  name: 'HomeView',
   data() {
     return {
       countries: [],

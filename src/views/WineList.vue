@@ -1,12 +1,12 @@
 <template>
 <a href=""><button class="sort-button fas fa-2x fa-sort"></button></a>
-<div v-for="wine in wines" :key="wine.id" id="list">
-  <div class="card" id="{{ wine.id }}">
+<div id="list">
+  <div v-for="wine in wines" :key="wine.id" class="card" id="{{ wine.id }}">
     <a href="#">
-			<img class="card-img-top" src="{{ wine.image_filename }}" width="200px">
+			<img class="card-img-top" :src="wine.get_thumbnail" width="200px">
       <div class="card-body">
-        <h2>{{ wine.name }}</h2>
-        <p>{{ wine.description }}</p>
+        <h2>{{ wine.name }} {{ wine.year }}</h2>
+        <p>{{ truncate(wine.description, 100, "...")}}</p>
 			</div>
     </a>
     <div class="card-figures">
@@ -28,7 +28,7 @@
 </div>
 </template>
 
-<script lang="ts">
+<script>
     import axios from 'axios'
     export default {
         name: 'WineList',
@@ -46,6 +46,9 @@
 								.get('/api/winelist')
 								.then(response => { this.wines = response.data})
 								.catch(error => {console.log(error)})
+            },
+            truncate(text, stop, clamp) {
+              return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
             }
         },
 				
