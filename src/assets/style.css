@@ -43,6 +43,10 @@ hr {
   border-top: 1px solid lightgray;
 }
 
+ion-icon {
+  font-size: 3rem;
+}
+
 nav {
   background: #D9D4D0;
   display: flex;
@@ -59,6 +63,7 @@ nav {
 nav h1 {
   flex: auto;
   margin: 0;
+  font-size: 2rem;
 }
 
 nav h1 a {
@@ -255,6 +260,11 @@ input[type="radio"]:checked {
 .card-body {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+}
+
+.card-content h2 {
+  min-height: 5rem;
+  color: #BF455B;
 }
 
 .card-figures {

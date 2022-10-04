@@ -5,12 +5,11 @@ export default {
 </script>
 
 <template>
-  <div class="container">
     <nav>
-      <a href="#"><i class="far fa-2x fa-user-circle"></i></a>
-  <a href="#"><h1>NFI Wine Merchants</h1></a>
+      <a href="#"><span class="icon is-large"><ion-icon name="person-circle"></ion-icon></span></a>
+  <a href="/"><h1>NFI Wine Merchants</h1></a>
   <div id="cart-container">
-  <a href="#"><i class="fas fa-2x fa-shopping-cart"></i>
+  <a href="#"><span class="icon is-large"><ion-icon name="cart"></ion-icon></span>
     <p id="cart-count">0</p>
 </a>
   </div>
@@ -18,11 +17,10 @@ export default {
 <section class="content">
   <RouterView />
 </section>
-    
-  </div>
+
 </template>
 
-<style scoped>
-
-
+<style>
+@import '../node_modules/bulma/css/bulma.css';
+@import 'assets/style.css';
 </style>
