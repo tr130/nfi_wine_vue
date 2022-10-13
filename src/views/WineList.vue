@@ -38,16 +38,19 @@
         name: 'WineList',
 				data() {
 					return {
-						wines: []
+						wines: [],
+            query: '',
 					};
 				},
 				mounted() {
+          this.query = window.location.search.substring(1);
+          console.log(this.query)
 					this.getWines();
 				},
         methods: {
             async getWines() {
               await axios
-								.get('/api/winelist')
+								.post('/api/winelist', {'query': this.query})
 								.then(response => { this.wines = response.data})
 								.catch(error => {console.log(error)})
             },

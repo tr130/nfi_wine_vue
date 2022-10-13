@@ -7,7 +7,7 @@
 <p class="intro-text">Since 1792 NFI Wine Merchants have been dedicated to sourcing and importing the best European wines. We have long standing
 partnerships with an exclusive network of vineyards across the continent, and pride ourselves on the consistent
 quality of our wines and our high standards of customer service.</p>
-<form action="" method="post">
+<form action="/winelist" method="get">
   <h3>Find your perfect wine</h3>
   <div class="field">
     <div class="control">
