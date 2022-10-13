@@ -18,8 +18,6 @@ export default {
 <template>
 <AppHeader />
 <section class="content">
-  <h1>{{cart}}
-  </h1>
   <RouterView />
 </section>
 
