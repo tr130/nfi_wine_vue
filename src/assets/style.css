@@ -112,15 +112,17 @@ header .action {
   border: 1px solid #260108;
 }
 
-.content:last-child {
-  margin-bottom: 0;
-}
-
 .content form {
-  margin: 1rem 0;
+  margin: 1rem auto;
   display: flex;
   flex-direction: column;
   align-items: center;
+  max-width: 20rem;
+  width: 80vw;
+}
+
+.content form .field {
+  width: 100%;
 }
 
 .content label {
@@ -143,13 +145,13 @@ header .action {
 }
 
 .content input[type="submit"] {
-  margin-top: 1rem;
   background-color: #BFBBB8;
 }
 
 .content input[type="submit"]:hover {
   background-color: #BF455B;
   color: white;
+  cursor: pointer;
 }
 
 .content select {
