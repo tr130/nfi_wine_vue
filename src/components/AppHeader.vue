@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import { mapState } from 'pinia';
 import { useCartStore } from '@/stores/CartStore.js';
 
 export default {
@@ -35,13 +34,7 @@ export default {
       this.cartStore.updateCart(itemId, quantity);
     },
   },
-  // computed: {
-  //   ...mapState(useCartStore, {
-  //     cartCount: (store) => Object.keys(store.cart).length,
-  //   }),
-  // },
   mounted() {
-    console.log('dummy', this.dummyCount)
     console.log(this.cartCount)
     this.updateCart(1,1);
     this.updateCart(3,5);

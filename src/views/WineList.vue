@@ -1,7 +1,7 @@
 <template>
 <a href=""><button class="sort-button fas fa-2x fa-sort"></button></a>
 <div id="list">
-  <div v-for="wine in wines" :key="wine.id" class="card" id="{{ wine.id }}">
+  <div v-for="wine in wines" :key="wine.id" class="card" :id="wine.id">
     <router-link v-bind:to="getUrl(wine.id)">
       <div class="card-image">
         <figure class="image">
@@ -19,13 +19,13 @@
     
     <div class="card-footer">
       <p>Price: {{ wine.price_incvat }}</p>
-      <form class="winelist-form" action="{% url 'update-cart' %}" method="post">
-        <input type="hidden" name="wine_id" value={{wine.id}}>
-        <input type="number" name="quantity" id="" 
-          value="{{ wine.id|in_basket:request.session }}" 
-          min="0" max="{{ wine.stock_level }}">
-        <button class="cart-button fas fa-2x fa-cart-plus" type="submit"></button>
-      </form>
+      <div class="winelist-form" >
+        <input type="hidden" name="wine_id" value="wine.id">
+        <input type="number" name="quantity" :id="wine.id + '-quantity'"
+          value="" 
+          min="0" :max=wine.stock_level>
+        <button @click="updateCart" class="cart-button" type="submit" :id="wine.id"><i class="bi bi-cart-plus-fill"></i>Add</button>
+      </div>
     </div>
   <hr>
   </div>
@@ -33,33 +33,47 @@
 </template>
 
 <script>
-    import axios from 'axios'
-    export default {
-        name: 'WineList',
-				data() {
-					return {
-						wines: [],
-            query: '',
-					};
-				},
-				mounted() {
-          this.query = window.location.search.substring(1);
-					this.getWines();
-				},
-        methods: {
-            async getWines() {
-              await axios
-								.post('/api/winelist', {'query': this.query})
-								.then(response => { this.wines = response.data})
-								.catch(error => {console.log(error)})
-            },
-            truncate(text, stop, clamp) {
-              return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
-            },
-            getUrl(id) {
-              return `details/${id}`
-            }
+import axios from 'axios'
+import { useCartStore } from '@/stores/CartStore.js';
+
+export default {
+    name: 'WineList',
+    setup() {
+        const cartStore = useCartStore();
+
+        return {cartStore}
+    },
+    data() {
+      return {
+        wines: [],
+        query: '',
+      };
+    },
+    mounted() {
+      this.query = window.location.search.substring(1);
+      this.getWines();
+    },
+    methods: {
+        async getWines() {
+          await axios
+            .post('/api/winelist', {'query': this.query})
+            .then(response => { this.wines = response.data})
+            .catch(error => {console.log(error)})
         },
-				
-    }
+        truncate(text, stop, clamp) {
+          return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
+        },
+        getUrl(id) {
+          return `details/${id}`
+        },
+        updateCart(e) {
+          let wineId = e.target.id
+          let quantity = Number.parseInt(document.getElementById(`${e.target.id}-quantity`).value);
+          console.log(wineId, quantity);
+          console.log(this.cartStore.cart);
+          this.cartStore.updateCart(wineId, quantity);
+          console.log(this.cartStore.cart)
+        },
+    },
+}
 </script>
