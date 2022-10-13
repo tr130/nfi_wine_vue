@@ -1,20 +1,25 @@
 <script>
+import AppHeader from '@/components/AppHeader.vue';  
+
 export default {
   name: 'App',
+  data() {
+    return {
+          a: "b",
+    }
+  },
+
+  components: {
+    AppHeader,
+  },
 }
 </script>
 
 <template>
-    <nav>
-      <a href="#"><span class="icon is-large"><ion-icon name="person-circle"></ion-icon></span></a>
-  <a href="/"><h1>NFI Wine Merchants</h1></a>
-  <div id="cart-container">
-  <a href="#"><span class="icon is-large"><ion-icon name="cart"></ion-icon></span>
-    <p id="cart-count">0</p>
-</a>
-  </div>
-</nav>
+<AppHeader />
 <section class="content">
+  <h1>{{cart}}
+  </h1>
   <RouterView />
 </section>
 

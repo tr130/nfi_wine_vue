@@ -3,7 +3,7 @@
         <h1>{{ wine.name }} {{ wine.year }}</h1>
     </header>
 <div class="card prod-card">
-	<img class="card-img-top" :src="wine.get_image" width="200px">
+	<img class="" :src="wine.get_image" width="200px">
   <div>
     <div class="card-body">
       <h2>Tasting Notes</h2>

@@ -44,7 +44,6 @@
 				},
 				mounted() {
           this.query = window.location.search.substring(1);
-          console.log(this.query)
 					this.getWines();
 				},
         methods: {
