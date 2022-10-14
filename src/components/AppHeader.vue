@@ -7,7 +7,7 @@
   <div id="cart-container">
   <a href="/showcart"><span class="icon is-large"><i class="bi bi-cart-fill" style="font-size: 2.2rem"></i></span>
   
-  <p id="cart-count" >{{ cartCount }}</p>
+  <p id="cart-count" >{{ count }}</p>
 </a>
   </div>
 </nav>
@@ -26,13 +26,14 @@ export default {
   },
   data() {
     return {
-      cartCount: this.cartStore.cart.length,
+      cart: this.cartStore.cart,
     }
   },
-  methods: {
-    updateCart(itemId, quantity) {
-      this.cartStore.updateCart(itemId, quantity);
-    },
-  },
+  props: {
+    count: {
+      type: Number,
+      required: true,
+    }
+  }
 }
 </script>

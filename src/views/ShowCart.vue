@@ -1,4 +1,5 @@
 <template>
+<AppHeader :count="this.cart.length"/>
 <h1>Basket</h1>
 <p v-if="cart.length < 1">Your basket is empty</p>
 <div v-else>
@@ -46,13 +47,17 @@
 <script>
 import axios from 'axios';
 import { useCartStore } from '@/stores/CartStore.js';
+import AppHeader from '@/components/AppHeader.vue';
 
 export default {
-  name: 'AppHeader',
+  name: 'ShowCart',
   setup() {
     const cartStore = useCartStore();
 
     return {cartStore}
+  },
+  components: {
+    AppHeader,
   },
   data() {
     return {
@@ -70,6 +75,7 @@ export default {
       this.cart = this.cartStore.cart;
     },
     getQuantity(wineId) {
+      console.log(this.cart, wineId);
       return this.cart.find(item => item.id === wineId).quantity;
     },
     getUrl(id) {

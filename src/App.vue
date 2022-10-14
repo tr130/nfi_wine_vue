@@ -16,7 +16,7 @@ export default {
 </script>
 
 <template>
-<AppHeader />
+<!--AppHeader /-->
 <section class="content">
   <RouterView />
 </section>

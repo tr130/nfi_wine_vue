@@ -67,9 +67,10 @@ export default {
           return `details/${id}`
         },
         updateCart(e) {
-          let wineId = e.target.id
+          let wineId = Number.parseInt(e.target.id)
           let quantity = Number.parseInt(document.getElementById(`${e.target.id}-quantity`).value);
           this.cartStore.updateCart(wineId, quantity);
+	  console.log(this.cartStore.cart);
         },
     },
 }

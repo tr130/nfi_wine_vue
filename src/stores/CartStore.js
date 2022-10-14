@@ -7,14 +7,15 @@ export const useCartStore = defineStore('CartStore', {
             cart: useStorage('cart', []),
         }
     },
-    //actions
     actions: {
 	clearCart() {
-	    this.cart = [];
+	   this.cart = [];
 	},
         updateCart(itemId, quantity) {
+	    console.log(typeof(itemId));
             let itemIndex = this.cart.findIndex(item => item.id === itemId);
             if (itemIndex >= 0) {
+		console.log('this');
                 if (quantity === 0) {
                     this.cart.splice(itemIndex,1);
                 } else {
@@ -24,6 +25,7 @@ export const useCartStore = defineStore('CartStore', {
                     };
                 }
             } else {
+		console.log('that');
                 if (quantity > 0) {
                     this.cart.push({
                         id: Number.parseInt(itemId),
