@@ -18,7 +18,7 @@
   </router-link>
     
     <div class="card-footer">
-      <p>Price: {{ wine.price_incvat }}</p>
+      <p>Price: £{{ wine.price_incvat }}</p>
       <div class="winelist-form" >
         <input type="hidden" name="wine_id" value="wine.id">
         <input type="number" name="quantity" :id="wine.id + '-quantity'"
@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import axios from 'axios';
 import { useCartStore } from '@/stores/CartStore.js';
 
 export default {

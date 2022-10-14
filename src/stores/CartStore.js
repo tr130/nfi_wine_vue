@@ -4,22 +4,34 @@ import { useStorage } from '@vueuse/core';
 export const useCartStore = defineStore('CartStore', {
     state: () => {
         return {
-            cart: useStorage('cart', {1:1,2:2,3:3}),
-            count: useStorage('count', 0),
+            cart: useStorage('cart', []),
         }
     },
     //actions
     actions: {
+	clearCart() {
+	    this.cart = [];
+	},
         updateCart(itemId, quantity) {
-            if (quantity === 0) {
-                delete this.cart[itemId];
+            let itemIndex = this.cart.findIndex(item => item.id === itemId);
+            if (itemIndex >= 0) {
+                if (quantity === 0) {
+                    this.cart.splice(itemIndex,1);
+                } else {
+                    this.cart[itemIndex] = {
+                        id: Number.parseInt(itemId),
+                        quantity: quantity,
+                    };
+                }
             } else {
-                this.cart[itemId] = quantity 
+                if (quantity > 0) {
+                    this.cart.push({
+                        id: Number.parseInt(itemId),
+                        quantity: quantity,
+                    });
+                }
             }
         },
-        increment() {
-            this.count++;
-        }
     }
     //getters
 });
