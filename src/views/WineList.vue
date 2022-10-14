@@ -24,7 +24,7 @@
         <input type="number" name="quantity" :id="wine.id + '-quantity'"
           value="" 
           min="0" :max=wine.stock_level>
-        <button @click="updateCart" class="cart-button" type="submit" :id="wine.id"><i class="bi bi-cart-plus-fill"></i>Add</button>
+        <a @click="updateCart" class="cart-button" type="submit" :id="wine.id"><i class="bi bi-cart-plus-fill"></i>Add</a>
       </div>
     </div>
   <hr>
@@ -69,10 +69,7 @@ export default {
         updateCart(e) {
           let wineId = e.target.id
           let quantity = Number.parseInt(document.getElementById(`${e.target.id}-quantity`).value);
-          console.log(wineId, quantity);
-          console.log(this.cartStore.cart);
           this.cartStore.updateCart(wineId, quantity);
-          console.log(this.cartStore.cart)
         },
     },
 }

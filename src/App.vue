@@ -25,5 +25,6 @@ export default {
 
 <style>
 @import '../node_modules/bulma/css/bulma.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
 @import 'assets/style.css';
 </style>
