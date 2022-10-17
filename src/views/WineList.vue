@@ -1,5 +1,5 @@
 <template>
-<a href=""><button class="sort-button fas fa-2x fa-sort"></button></a>
+<a><button class="sort-button"><i class="bi bi-sort-numeric-up"></i></button></a>
 <div id="list">
   <div v-for="wine in wines" :key="wine.id" class="card" :id="wine.id">
     <router-link v-bind:to="getUrl(wine.id)">
@@ -13,7 +13,7 @@
         <p>{{ truncate(wine.description, 100, "...")}}</p>
 			</div><div class="card-figures">
       <p>{{ wine.stock_level }} in stock</p>
-      <p>0 in basket</p>
+      <p>{{ getQuantity(wine.id) }} in basket</p>
     </div>
   </router-link>
     
@@ -22,7 +22,7 @@
       <div class="winelist-form" >
         <input type="hidden" name="wine_id" value="wine.id">
         <input type="number" name="quantity" :id="wine.id + '-quantity'"
-          value="" 
+          :value="getValue(wine.id, wine.stock_level)" 
           min="0" :max=wine.stock_level>
         <a @click="updateCart" class="cart-button" type="submit" :id="wine.id"><i class="bi bi-cart-plus-fill"></i>Add</a>
       </div>
@@ -34,6 +34,7 @@
 
 <script>
 import axios from 'axios';
+import { storeToRefs } from 'pinia';
 import { useCartStore } from '@/stores/CartStore.js';
 
 export default {
@@ -41,7 +42,13 @@ export default {
     setup() {
         const cartStore = useCartStore();
 
-        return {cartStore}
+        const { cart } = storeToRefs(cartStore);
+        const { updateCart } = cartStore;
+
+        return {
+            cart,
+            updateCart,
+        };
     },
     data() {
       return {
@@ -57,11 +64,28 @@ export default {
         async getWines() {
           await axios
             .post('/api/winelist', {'query': this.query})
-            .then(response => { this.wines = response.data})
+            .then(response => { this.wines = response.data })
             .catch(error => {console.log(error)})
         },
         truncate(text, stop, clamp) {
           return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
+        },
+        getQuantity(wineId) {
+	    const wineInCart = this.cart.find(item => item.id === wineId);
+	    if (wineInCart) {
+	        return wineInCart.quantity;
+	    } 
+            return 0; 
+        },
+        getValue(wineId, stockLevel) {
+	    if (stockLevel < 1) {
+		return 0;
+	    }
+	    const wineInCart = this.cart.find(item => item.id === wineId);
+	    if (wineInCart) {
+	        return wineInCart.quantity;
+	    } 
+            return 1; 
         },
         getUrl(id) {
           return `details/${id}`
@@ -69,8 +93,7 @@ export default {
         updateCart(e) {
           let wineId = Number.parseInt(e.target.id)
           let quantity = Number.parseInt(document.getElementById(`${e.target.id}-quantity`).value);
-          this.cartStore.updateCart(wineId, quantity);
-	  console.log(this.cartStore.cart);
+          this.updateCart(wineId, quantity);
         },
     },
 }

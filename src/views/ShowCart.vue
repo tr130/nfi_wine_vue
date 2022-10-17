@@ -74,7 +74,7 @@ export default {
   },
   methods: {
     updateCart(itemId, quantity) {
-      this.cartStore.updateCart(itemId, quantity);
+      this.updateCart(itemId, quantity);
     },
     clearCart() {
       this.clearCart();
