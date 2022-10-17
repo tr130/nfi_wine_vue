@@ -7,7 +7,7 @@
   <div id="cart-container">
   <a href="/showcart"><span class="icon is-large"><i class="bi bi-cart-fill" style="font-size: 2.2rem"></i></span>
   
-  <p id="cart-count" >{{ count }}</p>
+  <p id="cart-count" >i{{ this.cart.length }}</p>
 </a>
   </div>
 </nav>
@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import { storeToRefs } from 'pinia';
 import { useCartStore } from '@/stores/CartStore.js';
 
 export default {
@@ -22,18 +23,14 @@ export default {
   setup() {
     const cartStore = useCartStore();
 
-    return {cartStore}
+    const { cart } = storeToRefs(cartStore);    
+
+    return {cart};
   },
   data() {
     return {
-      cart: this.cartStore.cart,
+      cart: this.cart,
     }
   },
-  props: {
-    count: {
-      type: Number,
-      required: true,
-    }
-  }
 }
 </script>

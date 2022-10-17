@@ -1,22 +1,27 @@
 <script>
 import AppHeader from '@/components/AppHeader.vue';  
+import { useCartStore } from '@/stores/CartStore.js';
 
 export default {
   name: 'App',
   data() {
     return {
-          a: "b",
+      cart: this.cartStore.cart,
     }
   },
-
   components: {
     AppHeader,
   },
+  setup() {
+    const cartStore = useCartStore();
+
+    return {cartStore}
+  }
 }
 </script>
 
 <template>
-<!--AppHeader /-->
+<AppHeader />
 <section class="content">
   <RouterView />
 </section>

@@ -1,7 +1,6 @@
 <template>
-<AppHeader :count="this.cart.length"/>
 <h1>Basket</h1>
-<p v-if="cart.length < 1">Your basket is empty</p>
+<p v-if="this.cart.length < 1">Your basket is empty</p>
 <div v-else>
 <ul>
     <li v-for="wine of wines" :key="wine" class="cart-item">
@@ -46,6 +45,7 @@
 
 <script>
 import axios from 'axios';
+import { storeToRefs } from 'pinia';
 import { useCartStore } from '@/stores/CartStore.js';
 import AppHeader from '@/components/AppHeader.vue';
 
@@ -54,25 +54,31 @@ export default {
   setup() {
     const cartStore = useCartStore();
 
-    return {cartStore}
+    const { cart } = storeToRefs(cartStore);
+    const { updateCart, clearCart } = cartStore;
+
+    return {
+      cart,
+      updateCart,
+      clearCart,
+    };
   },
   components: {
     AppHeader,
   },
   data() {
     return {
-      cart: this.cartStore.cart,
+      cart: this.cart,
       wines: [],
     }
   },
   methods: {
     updateCart(itemId, quantity) {
       this.cartStore.updateCart(itemId, quantity);
-      this.cart = this.cartStore.cart;
     },
     clearCart() {
-      this.cartStore.clearCart();
-      this.cart = this.cartStore.cart;
+      this.clearCart();
+      this.getCartDetails();
     },
     getQuantity(wineId) {
       console.log(this.cart, wineId);
