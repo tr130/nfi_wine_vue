@@ -3,36 +3,9 @@
 <p v-if="this.cart.length < 1">Your basket is empty</p>
 <div v-else>
 <ul>
-    <li v-for="wine of wines" :key="wine" class="cart-item">
-        <div class="cart-item-division">
-            <router-link :to="getUrl(wine.id)">
-		<div class="card-image">
-		  <figure class="image is-48x48">
-		    <img :src="wine.get_thumbnail" width="50px"/>
-                  </figure>
-                </div>
-                    <div class="class-item-info">
-                        <h3>{{ wine.name }} {{ wine.year }}</h3>
-                        <p>£{{ wine.price_incvat }} each
-                        <br>{{ wine.stock_level }} in stock
-                        <br>{{ getQuantity(wine.id) }} in basket
-                        </p>
-                    </div>
-            </router-link>
-        </div>
-        <div class="cart-item-division">
-            <form action="#" method="POST">
-                <input type="hidden" name="item_id" value="{{ wine }}">
-                <input type="number" name="quantity" id="" value="" min="1"
-                    max="">
-                <button class="cart-button" type="submit">Update</button>
-            </form>
-            <form action="#" method="POST">
-                <input type="hidden" name="item_id" value="{{ wine }}">
-                <button class="cart-button fas fa-2x fa-times" type="submit"></button>
-            </form>
-        </div>
-    </li>
+    <li v-for="wine of cart" :key="wine" class="cart-item">
+        <CartDetailsItem :wine="wine" />
+            </li>
 
     <li class="cart-item"><a class="clear-cart" @click="clearCart">Clear Cart</a></li>
 </ul>
@@ -47,7 +20,7 @@
 import axios from 'axios';
 import { storeToRefs } from 'pinia';
 import { useCartStore } from '@/stores/CartStore.js';
-import AppHeader from '@/components/AppHeader.vue';
+import CartDetailsItem from '@/components/CartDetailsItem.vue';
 
 export default {
   name: 'ShowCart',
@@ -64,7 +37,7 @@ export default {
     };
   },
   components: {
-    AppHeader,
+    CartDetailsItem,
   },
   data() {
     return {
@@ -75,6 +48,7 @@ export default {
   methods: {
     updateCart(itemId, quantity) {
       this.updateCart(itemId, quantity);
+      this.getCartDetails();
     },
     clearCart() {
       this.clearCart();

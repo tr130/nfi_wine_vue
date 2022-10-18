@@ -11,16 +11,17 @@ export const useCartStore = defineStore('CartStore', {
 	clearCart() {
 	   this.cart = [];
 	},
-        updateCart(itemId, quantity) {
-	    console.log(typeof(itemId));
-            let itemIndex = this.cart.findIndex(item => item.id === itemId);
+        updateCart(item, quantity) {
+	    console.log(item, quantity);
+	    console.log(this.cart);
+            let itemIndex = this.cart.findIndex(cartItem => cartItem.details.id == item.id);
             if (itemIndex >= 0) {
 		console.log('this');
                 if (quantity === 0) {
                     this.cart.splice(itemIndex,1);
                 } else {
                     this.cart[itemIndex] = {
-                        id: Number.parseInt(itemId),
+			details: item,
                         quantity: quantity,
                     };
                 }
@@ -28,7 +29,7 @@ export const useCartStore = defineStore('CartStore', {
 		console.log('that');
                 if (quantity > 0) {
                     this.cart.push({
-                        id: Number.parseInt(itemId),
+			details: item,
                         quantity: quantity,
                     });
                 }

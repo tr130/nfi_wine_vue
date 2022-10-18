@@ -16,15 +16,21 @@
       <p>{{ getQuantity(wine.id) }} in basket</p>
     </div>
   </router-link>
-    
     <div class="card-footer">
       <p>Price: £{{ wine.price_incvat }}</p>
-      <div class="winelist-form" >
-        <input type="hidden" name="wine_id" value="wine.id">
-        <input type="number" name="quantity" :id="wine.id + '-quantity'"
-          :value="getValue(wine.id, wine.stock_level)" 
-          min="0" :max=wine.stock_level>
-        <a @click="updateCart" class="cart-button" type="submit" :id="wine.id"><i class="bi bi-cart-plus-fill"></i>Add</a>
+      <div class="winelist-form">
+	<div v-if="inCart(wine)">
+          <input type="number" name="quantity" :id="wine.id + '-quantity'"
+            :value="getValue(wine.id, wine.stock_level)" 
+            min="0" :max=wine.stock_level>
+          <a @click="updateCart(wine)" class="cart-button" type="submit" :id="wine.id"><i class="bi bi-cart-plus-fill"></i>update</a>
+        </div>
+        <div v-else>
+          <input type="number" name="quantity" :id="wine.id + '-quantity'"
+            :value="wine.stock_level ? 1 : 0" 
+            min="0" :max=wine.stock_level>
+          <a @click="updateCart(wine)" class="cart-button" type="submit" :id="wine.id"><i class="bi bi-cart-plus-fill"></i>Add</a>
+        </div>
       </div>
     </div>
   <hr>
@@ -43,11 +49,12 @@ export default {
         const cartStore = useCartStore();
 
         const { cart } = storeToRefs(cartStore);
-        const { updateCart } = cartStore;
+        const { updateCart, updateCartByWine } = cartStore;
 
         return {
             cart,
             updateCart,
+            updateCartByWine,
         };
     },
     data() {
@@ -71,7 +78,7 @@ export default {
           return text.slice(0, stop) + (stop < text.length ? clamp || '...' : '')
         },
         getQuantity(wineId) {
-	    const wineInCart = this.cart.find(item => item.id === wineId);
+	    const wineInCart = this.cart.find(item => item.details.id === wineId);
 	    if (wineInCart) {
 	        return wineInCart.quantity;
 	    } 
@@ -81,7 +88,7 @@ export default {
 	    if (stockLevel < 1) {
 		return 0;
 	    }
-	    const wineInCart = this.cart.find(item => item.id === wineId);
+	    const wineInCart = this.cart.find(item => item.details.id === wineId);
 	    if (wineInCart) {
 	        return wineInCart.quantity;
 	    } 
@@ -90,10 +97,12 @@ export default {
         getUrl(id) {
           return `details/${id}`
         },
-        updateCart(e) {
-          let wineId = Number.parseInt(e.target.id)
-          let quantity = Number.parseInt(document.getElementById(`${e.target.id}-quantity`).value);
-          this.updateCart(wineId, quantity);
+        inCart(wine) {
+          return this.cart.find(item => item.details.id === wine.id);
+        },
+        updateCart(wine) {
+          let quantity = Number.parseInt(document.getElementById(`${wine.id}-quantity`).value);
+          this.updateCart(wine, quantity);
         },
     },
 }
