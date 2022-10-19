@@ -1,6 +1,6 @@
 <template>
   <div class="cart-item-division">
-    <router-link :to="getUrl(wine.details.id)">
+    <router-link :to="`details/${wine.details.id}`">
       <div class="card-image">
         <figure class="image is-48x48">
 	  <img :src="wine.details.get_thumbnail" width="50px"/>
@@ -17,14 +17,15 @@
   </div>
   <div class="cart-item-division">
     <form action="#" method="POST">
-      <input type="hidden" name="item_id" value="{{ wine.details.id }}">
-      <input type="number" name="quantity" id="" value="" min="1"
-        max="">
-      <button class="cart-button" type="submit">Update</button>
+ 
+          <input type="number" name="quantity" :id="wine.details.id + '-quantity'"
+            :value="wine.quantity" 
+            min="0" :max=wine.stock_level>
+          <a @click="updateCart(wine)" class="cart-button" type="submit" :id="wine.details.id"><i class="bi bi-cart-plus-fill"></i>update</a>
     </form>
     <form action="#" method="POST">
       <input type="hidden" name="item_id" value="{{ wine.details.id }}">
-      <a @click="updateCart(wine.details, 0)" class="cart-button"><i class="bi bi-x-lg" style="font-size:2rem"></i></a>
+      <a @click="removeFromCart(wine)" class="cart-button"><i class="bi bi-x-lg" style="font-size:2rem"></i></a>
     </form>
   </div>
 </template>
@@ -53,13 +54,13 @@ export default {
     };
   },
   methods: {
-    getUrl(id) {
-      return `details/${id}`;
+    removeFromCart(wine) {
+      this.updateCart(wine.details, 0);
     },
-//    getQuantity(wineId) {
-//      console.log(this.cart, wineId);
-//      return this.cart.find(item => item.id === wineId).quantity;
-//    },
+    updateCart(wine) {
+      let quantity = Number.parseInt(document.getElementById(`${wine.details.id}-quantity`).value);
+      this.updateCart(wine.details, quantity);
+    }
   },
 }
 </script>
