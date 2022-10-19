@@ -5,11 +5,10 @@
 <ul>
     <li v-for="wine of cart" :key="wine" class="cart-item">
         <CartDetailsItem :wine="wine" />
-            </li>
-
+    </li>
     <li class="cart-item"><a class="clear-cart" @click="clearCart">Clear Cart</a></li>
 </ul>
-<h3>Subtotal: </h3>
+<h3>Subtotal: £{{ subTotal }}</h3>
 <p>Postage will be calculated at checkout</p>
 
 <a href="#">Checkout Now</a>
@@ -36,6 +35,14 @@ export default {
       clearCart,
     };
   },
+  computed: {
+    subTotal() {
+      return this.cart.reduce((total, item) => {
+	console.log(item);
+        return total + item.details.price_incvat * item.quantity;
+      }, 0).toFixed(2);
+    },
+  },
   components: {
     CartDetailsItem,
   },
@@ -46,30 +53,12 @@ export default {
     }
   },
   methods: {
-    updateCart(itemId, quantity) {
-      this.updateCart(itemId, quantity);
-      this.getCartDetails();
-    },
-    clearCart() {
-      this.clearCart();
-      this.getCartDetails();
-    },
     getQuantity(wineId) {
-      console.log(this.cart, wineId);
       return this.cart.find(item => item.id === wineId).quantity;
     },
     getUrl(id) {
       return `details/${id}`
     },
-    async getCartDetails() {
-      await axios
-	.post('/api/cart_details', {'cart': this.cart.map((wine) => (wine.id))})
-	.then(response => {this.wines = response.data})
-	.catch(error => console.log(error))
-    },
-  },
-  mounted() {
-    this.getCartDetails();
   },
 }
 </script>

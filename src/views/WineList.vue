@@ -2,7 +2,7 @@
 <a><button class="sort-button"><i class="bi bi-sort-numeric-up"></i></button></a>
 <div id="list">
   <div v-for="wine in wines" :key="wine.id" class="card" :id="wine.id">
-    <router-link v-bind:to="getUrl(wine.id)">
+    <router-link v-bind:to="`details/${wine.id}`">
       <div class="card-image">
         <figure class="image">
           <img :src="wine.get_thumbnail" width="200px"/>
@@ -49,12 +49,11 @@ export default {
         const cartStore = useCartStore();
 
         const { cart } = storeToRefs(cartStore);
-        const { updateCart, updateCartByWine } = cartStore;
+        const { updateCart } = cartStore;
 
         return {
             cart,
             updateCart,
-            updateCartByWine,
         };
     },
     data() {
@@ -93,9 +92,6 @@ export default {
 	        return wineInCart.quantity;
 	    } 
             return 1; 
-        },
-        getUrl(id) {
-          return `details/${id}`
         },
         inCart(wine) {
           return this.cart.find(item => item.details.id === wine.id);

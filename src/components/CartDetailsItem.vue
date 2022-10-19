@@ -1,6 +1,6 @@
 <template>
   <div class="cart-item-division">
-    <router-link :to="getUrl(wine.id)">
+    <router-link :to="getUrl(wine.details.id)">
       <div class="card-image">
         <figure class="image is-48x48">
 	  <img :src="wine.details.get_thumbnail" width="50px"/>

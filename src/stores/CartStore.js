@@ -9,6 +9,7 @@ export const useCartStore = defineStore('CartStore', {
     },
     actions: {
 	clearCart() {
+		console.log('clear');
 	   this.cart = [];
 	},
         updateCart(item, quantity) {

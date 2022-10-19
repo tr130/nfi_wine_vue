@@ -7,7 +7,7 @@
   <div id="cart-container">
   <a href="/showcart"><span class="icon is-large"><i class="bi bi-cart-fill" style="font-size: 2.2rem"></i></span>
   
-  <p id="cart-count" >i{{ this.cart.length }}</p>
+  <p id="cart-count" >{{ this.cart.length }}</p>
 </a>
   </div>
 </nav>
