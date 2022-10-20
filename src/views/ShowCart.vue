@@ -2,7 +2,7 @@
 <h1>Basket</h1>
 <p v-if="this.cart.length < 1">Your basket is empty</p>
 <div v-else>
-<ul>
+<ul class="cart-list">
     <li v-for="wine of cart" :key="wine" class="cart-item">
         <CartDetailsItem :wine="wine" />
     </li>
