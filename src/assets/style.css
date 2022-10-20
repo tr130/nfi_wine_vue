@@ -172,6 +172,14 @@ header .action {
   text-align: justify;
 }
 
+.cart-base {
+  text-align: center;
+}
+
+.cart-base h3 {
+  color: #BF455B;
+} 
+
 #cart-count {
   font-family: 'Noto Sans JP', sans-serif;
   position: absolute;
@@ -191,6 +199,7 @@ header .action {
 
 .cart-button,
 .sort-button {
+  padding-left: 0.5rem;
   background: none;
   border: none;
   color: #260108;
@@ -317,6 +326,7 @@ ul {
 }
 
 .cart-item h3 {
+  color: #BF455B;
   font-size: 1.2rem;
   margin: 0 !important;
 }
@@ -327,17 +337,30 @@ ul {
   flex-grow: 1;
 }
 
+.cart-item-upper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .cart-item-lower {
   display: flex;
   justify-content: space-between;
 }
 
+.cart-item-lower-left {
+  display: flex;
+  align-items: end;
+}
+
 .cart-item-lower-right {
   display: flex;
+  align-items: end;
 }
 
 .cart-item-subtotal {
   padding-right: 0.5rem;
+  text-align: right;
 }
 
 .cart-item-division {

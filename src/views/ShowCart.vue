@@ -6,12 +6,13 @@
     <li v-for="wine of cart" :key="wine" class="cart-item">
         <CartDetailsItem :wine="wine" />
     </li>
-    <li class="cart-item"><a class="clear-cart" @click="clearCart">Clear Cart</a></li>
+    <li class="cart-item"><a class="clear-cart" @click="clearCart">Clear Basket</a></li>
 </ul>
-<h3>Subtotal: £{{ subTotal }}</h3>
-<p>Postage will be calculated at checkout</p>
-
-<a href="#">Checkout Now</a>
+<div class="cart-base">
+  <h3>Subtotal: £{{ subTotal }}</h3>
+  <p>Postage will be calculated at checkout</p>
+  <a href="#">Checkout Now</a>
+</div>
 </div>
 </template>
 

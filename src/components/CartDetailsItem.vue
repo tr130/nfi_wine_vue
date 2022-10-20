@@ -5,26 +5,25 @@
       </router-link>  
     </div>
     <div class="cart-item-details">
+        <div class="cart-item-upper">
       <router-link :to="`details/${wine.details.id}`">
-        <div class="">
           <h3>{{ wine.details.name }} {{ wine.details.year }}</h3>
-          <p>£{{ wine.details.price_incvat }} each</p>
-        </div>
       </router-link>
+        </div>
       <div class="cart-item-lower">
         <div class="cart-item-lower-left">
-          <input @focus="showUpdate" type="number" name="quantity" :id="wine.details.id + '-quantity'"
-            :value="wine.quantity" min="0" :max=wine.stock_level>
-          <a v-if="showUpdateBtn" @click="updateCart(wine)" class="cart-item-update-button" type="submit" id="updateBtn">
-          <i class="bi bi-arrow-clockwise" style="font-size:1.5rem"></i>update
-          </a>
-        </div>
+          <p>£{{ wine.details.price_incvat }} each</p>
+                  </div>
         <div class="cart-item-lower-right">
           <div class="cart-item-subtotal">
             <h3>Subtotal</h3>
             <p>£{{ subtotal }}</p>
           </div>
-          <a @click="removeFromCart(wine)" class="cart-button">
+          <input @focus="showUpdate" type="number" name="quantity" :id="wine.details.id + '-quantity'"
+            :value="wine.quantity" min="0" :max=wine.stock_level>
+          <a v-if="showUpdateBtn" @click="updateCart(wine)" class="cart-button" type="submit" id="updateBtn">
+          <i class="bi bi-arrow-clockwise" style="font-size:1.5rem"></i></a>
+          <a v-else @click="removeFromCart(wine)" class="cart-button">
             <i class="bi bi-x-lg" style="font-size:1.5rem"></i>
           </a>
         </div>
