@@ -4,6 +4,7 @@ import WineList from '../views/WineList.vue'
 import WineDetails from '@/views/WineDetails.vue'
 import ShowCart from '@/views/ShowCart.vue'
 import LoginPage from '@/views/LoginPage.vue'
+import AccountDetails from '@/views/AccountDetails.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -40,6 +41,11 @@ const router = createRouter({
       path: '/login',
       name: 'LoginPage',
       component: LoginPage
+    },
+    {
+      path: '/account',
+      name: 'AccountDetails',
+      component: AccountDetails
     },
   ]
 })
