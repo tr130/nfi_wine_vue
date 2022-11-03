@@ -1,7 +1,7 @@
 <template>
   <h1>Log in</h1>
   <LoginForm />
-  <a href="#">Make an account</a>
+  <router-link to="/register">Make an account</router-link>
 </template>
 
 <script>

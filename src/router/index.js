@@ -1,9 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import WineList from '../views/WineList.vue'
+import HomeView from '@/views/HomeView.vue'
+import WineList from '@/views/WineList.vue'
 import WineDetails from '@/views/WineDetails.vue'
 import ShowCart from '@/views/ShowCart.vue'
 import LoginPage from '@/views/LoginPage.vue'
+import RegisterPage from '@/views/RegisterPage.vue'
 import AccountDetails from '@/views/AccountDetails.vue'
 
 const router = createRouter({
@@ -41,6 +42,11 @@ const router = createRouter({
       path: '/login',
       name: 'LoginPage',
       component: LoginPage
+    },
+    {
+      path: '/register',
+      name: 'RegisterPage',
+      component: RegisterPage
     },
     {
       path: '/account',
